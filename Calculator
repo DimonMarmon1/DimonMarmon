@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="calculator">
+      <input type="text" class="display" disabled />
+      <div class="buttons">
+        <button class="operator">+</button>
+        <button class="operator">-</button>
+        <button class="operator">*</button>
+        <button class="operator">/</button>
+        <button class="number">1</button>
+        <button class="number">2</button>
+        <button class="number">3</button>
+        <button class="number">4</button>
+        <button class="number">5</button>
+        <button class="number">6</button>
+        <button class="number">7</button>
+        <button class="number">8</button>
+        <button class="number">9</button>
+        <button class="number">0</button>
+        <button class="evaluate">=</button>
+        <button class="clear">Clear</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
+const display = document.querySelector('.display');
+const buttons = document.querySelectorAll('button');
+let history = '';
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        if (button.classList.contains('number')) {
+            display.value += button.textContent;
+        } else if (button.classList.contains('operator')) {
+            display.value += `${button.textContent}` ;
+        } else if (button.classList.contains('clear')) {
+            display.value = '';
+            history = '';
+        } else if (button.classList.contains('evaluate')) {
+            try {
+                const result = eval(display.value);
+                display.value = result;
+                history += display.value + '\n';
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+    });
+});
+
+body {
+    background-color: #8e3c02;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.calculator {
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 50px auto;
+}
+
+.display {
+    width: 96%;
+    height: 40px;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+button:hover {
+    background-color: #343333;
+}
+
+.operator,
+.clear {
+    background-color: #000000;
+    color: #dc5e04;
+}
+
+.evaluate {
+    background: #dc5e04;
+    border-radius: 50px;
+    width: 50px;
+    margin-left: 48px;
+    color: #ffffff;
+}
+
+.evaluate:hover {
+    background: #dc5e04;
+}
